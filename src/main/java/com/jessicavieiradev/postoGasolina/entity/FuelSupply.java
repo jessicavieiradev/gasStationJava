@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "fuelSupplies")
+@Table(name = "fuel_supplies")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,13 +24,13 @@ public class FuelSupply {
     @Column(name = "date",nullable = false)
     private DateTimeFormat date;
 
-    @Column(name = "totalAmount",nullable = false)
+    @Column(name = "total_amount",nullable = false)
     private BigDecimal totalAmount;
 
     @Column(name = "literage",nullable = false)
     private BigDecimal literage;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fuelPumpId")
+    @ManyToOne
+    @JoinColumn(name = "fuel_pump_id",nullable = false)
     private FuelPump fuelPump;
 }
