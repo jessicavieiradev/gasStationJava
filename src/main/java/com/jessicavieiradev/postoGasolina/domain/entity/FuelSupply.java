@@ -1,4 +1,4 @@
-package com.jessicavieiradev.postoGasolina.entity;
+package com.jessicavieiradev.postoGasolina.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -22,13 +23,16 @@ public class FuelSupply {
     private UUID id;
 
     @Column(name = "date",nullable = false)
-    private DateTimeFormat date;
+    private LocalDateTime date;
 
-    @Column(name = "total_amount",nullable = false)
+    @Column(name = "total_amount",nullable = false,precision = 10, scale = 2)
     private BigDecimal totalAmount;
 
-    @Column(name = "literage",nullable = false)
+    @Column(name = "literage",nullable = false,precision = 10, scale = 3)
     private BigDecimal literage;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @ManyToOne
     @JoinColumn(name = "fuel_pump_id",nullable = false)
