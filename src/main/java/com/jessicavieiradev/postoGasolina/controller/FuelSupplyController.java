@@ -6,6 +6,7 @@ import com.jessicavieiradev.postoGasolina.dto.fuelPumpDTO.FuelPumpRequest;
 import com.jessicavieiradev.postoGasolina.dto.fuelPumpDTO.FuelPumpResponse;
 import com.jessicavieiradev.postoGasolina.repository.FuelSupplyRepository;
 import com.jessicavieiradev.postoGasolina.service.FuelSupplyService;
+import com.jessicavieiradev.postoGasolina.service.IFuelSupplyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,11 +20,11 @@ import java.util.UUID;
 @RequestMapping("/api/v1/fuel-supplies")
 @RequiredArgsConstructor
 public class FuelSupplyController {
-    private final FuelSupplyService fuelSupplyService;
+    private final IFuelSupplyService fuelSupplyService;
 
     @PostMapping
     public ResponseEntity<FuelSupplyResponse> create(@RequestBody @Valid FuelSupplyRequest dto) {
-        FuelSupplyResponse response = fuelSupplyService.createFuelSupply(dto);
+        FuelSupplyResponse response = fuelSupplyService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -39,7 +40,7 @@ public class FuelSupplyController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        fuelSupplyService.deleteFuelSupply(id);
+        fuelSupplyService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

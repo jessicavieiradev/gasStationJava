@@ -21,12 +21,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class FuelSupplyService {
+public class FuelSupplyService implements IFuelSupplyService {
     private final FuelSupplyRepository fuelSupplyRepository;
     private final FuelPumpRepository fuelPumpRepository;
 
     @Transactional
-    public FuelSupplyResponse createFuelSupply(FuelSupplyRequest dto) {
+    public FuelSupplyResponse create(FuelSupplyRequest dto) {
         FuelPump fuelPump = fuelPumpRepository.findById(dto.fuelPumpId())
                 .orElseThrow(() -> new BusinessException("Fuel Pump not found or is inactive."));
         BigDecimal price = fuelPump.getFuelType().getPrice();
@@ -71,7 +71,7 @@ public class FuelSupplyService {
     }
 
     @Transactional
-    public void deleteFuelSupply(UUID id) {
+    public void delete(UUID id) {
         if (!fuelSupplyRepository.existsById(id)) {
             throw new BusinessException("Fuel Supply not found or it was deleted.");
         }

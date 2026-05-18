@@ -20,13 +20,13 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
-public class FuelPumpService {
+public class FuelPumpService implements IFuelPumpService{
 
     private final FuelPumpRepository fuelPumpRepository;
     private final FuelTypeRepository fuelTypeRepository;
 
     @Transactional
-    public FuelPumpResponse createFuelPump(FuelPumpRequest dto) {
+    public FuelPumpResponse create(FuelPumpRequest dto) {
         if (fuelPumpRepository.existsByName(dto.name())) {
             throw new BusinessException("The fuel pump name already exists.");
         }
@@ -54,7 +54,7 @@ public class FuelPumpService {
     }
 
     @Transactional
-    public FuelPumpResponse updateFuelPump(UUID id, FuelPumpRequest dto) {
+    public FuelPumpResponse update(UUID id, FuelPumpRequest dto) {
         FuelPump fuelPump = fuelPumpRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Fuel Pump not found."));
 
@@ -68,7 +68,7 @@ public class FuelPumpService {
     }
 
     @Transactional
-    public void deleteFuelPump(UUID id) {
+    public void delete(UUID id) {
         if (!fuelPumpRepository.existsById(id)) {
             throw new BusinessException("Fuel Pump not found.");
         }
@@ -76,7 +76,7 @@ public class FuelPumpService {
     }
 
     @Transactional
-    public void reactivateFuelPump(UUID id) {
+    public void reactivate(UUID id) {
         FuelPump pump = fuelPumpRepository.findByIdIncludingInactive(id)
                 .orElseThrow(() -> new BusinessException("Fuel pump not found"));
 

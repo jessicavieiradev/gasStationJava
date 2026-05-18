@@ -3,6 +3,7 @@ package com.jessicavieiradev.postoGasolina.controller;
 import com.jessicavieiradev.postoGasolina.dto.fuelTypeDTO.FuelTypeRequest;
 import com.jessicavieiradev.postoGasolina.dto.fuelTypeDTO.FuelTypeResponse;
 import com.jessicavieiradev.postoGasolina.service.FuelTypeService;
+import com.jessicavieiradev.postoGasolina.service.IFuelTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,11 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class FuelTypeController {
 
-    private final FuelTypeService fuelTypeService;
+    private final IFuelTypeService fuelTypeService;
 
     @PostMapping
     public ResponseEntity<FuelTypeResponse> create(@RequestBody @Valid FuelTypeRequest dto) {
-        FuelTypeResponse response = fuelTypeService.createFuelType(dto);
+        FuelTypeResponse response = fuelTypeService.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -40,18 +41,18 @@ public class FuelTypeController {
             @PathVariable UUID id,
             @RequestBody @Valid FuelTypeRequest dto
     ) {
-        return ResponseEntity.ok(fuelTypeService.updateFuelType(id, dto));
+        return ResponseEntity.ok(fuelTypeService.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        fuelTypeService.deleteFuelType(id);
+        fuelTypeService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/reactivate")
     public ResponseEntity<Void> reactivate(@PathVariable UUID id) {
-        fuelTypeService.reactivateFuelType(id);
+        fuelTypeService.reactivate(id);
         return ResponseEntity.noContent().build();
     }
 }

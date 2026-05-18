@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class FuelTypeService {
+public class FuelTypeService implements IFuelTypeService {
 
     private final FuelTypeRepository fuelTypeRepository;
 
     @Transactional
-    public FuelTypeResponse createFuelType(FuelTypeRequest dto) {
+    public FuelTypeResponse create(FuelTypeRequest dto) {
         if (fuelTypeRepository.existsByName(dto.name())) {
             throw new BusinessException("Fuel type already exists.");
         }
@@ -49,7 +49,7 @@ public class FuelTypeService {
     }
 
     @Transactional
-    public FuelTypeResponse updateFuelType(UUID id, FuelTypeRequest dto) {
+    public FuelTypeResponse update(UUID id, FuelTypeRequest dto) {
         FuelType fuelType = fuelTypeRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Fuel type not found."));
 
@@ -64,7 +64,7 @@ public class FuelTypeService {
     }
 
     @Transactional
-    public void deleteFuelType(UUID id) {
+    public void delete(UUID id) {
         if (!fuelTypeRepository.existsById(id)) {
             throw new BusinessException("Fuel type not found.");
         }
@@ -72,7 +72,7 @@ public class FuelTypeService {
     }
 
     @Transactional
-    public void reactivateFuelType(UUID id) {
+    public void reactivate(UUID id) {
         FuelType fuelType = fuelTypeRepository.findByIdIncludingInactive(id)
                 .orElseThrow(() -> new BusinessException("Fuel type not found."));
 
