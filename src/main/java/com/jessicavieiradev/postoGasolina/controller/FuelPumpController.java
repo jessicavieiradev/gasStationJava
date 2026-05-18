@@ -2,7 +2,6 @@ package com.jessicavieiradev.postoGasolina.controller;
 
 import com.jessicavieiradev.postoGasolina.dto.fuelPumpDTO.FuelPumpRequest;
 import com.jessicavieiradev.postoGasolina.dto.fuelPumpDTO.FuelPumpResponse;
-import com.jessicavieiradev.postoGasolina.service.FuelPumpService;
 import com.jessicavieiradev.postoGasolina.service.IFuelPumpService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

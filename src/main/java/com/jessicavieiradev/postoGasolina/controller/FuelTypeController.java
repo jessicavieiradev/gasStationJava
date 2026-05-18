@@ -2,7 +2,6 @@ package com.jessicavieiradev.postoGasolina.controller;
 
 import com.jessicavieiradev.postoGasolina.dto.fuelTypeDTO.FuelTypeRequest;
 import com.jessicavieiradev.postoGasolina.dto.fuelTypeDTO.FuelTypeResponse;
-import com.jessicavieiradev.postoGasolina.service.FuelTypeService;
 import com.jessicavieiradev.postoGasolina.service.IFuelTypeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
