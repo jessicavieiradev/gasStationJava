@@ -1,6 +1,7 @@
 package com.jessicavieiradev.postoGasolina.service;
 
 import com.jessicavieiradev.postoGasolina.domain.entity.FuelType;
+import com.jessicavieiradev.postoGasolina.domain.enums.Status;
 import com.jessicavieiradev.postoGasolina.dto.fuelTypeDTO.FuelTypeRequest;
 import com.jessicavieiradev.postoGasolina.dto.fuelTypeDTO.FuelTypeResponse;
 import com.jessicavieiradev.postoGasolina.exception.BusinessException;
@@ -42,9 +43,9 @@ public class FuelTypeService {
 
     @Transactional(readOnly = true)
     public FuelTypeResponse findById(UUID id) {
-        FuelType fuelType = fuelTypeRepository.findById(id)
+        return fuelTypeRepository.findById(id)
+                .map(FuelTypeMapper::toResponse)
                 .orElseThrow(() -> new BusinessException("Fuel type not found."));
-        return FuelTypeMapper.toResponse(fuelType);
     }
 
     @Transactional
@@ -68,5 +69,18 @@ public class FuelTypeService {
             throw new BusinessException("Fuel type not found.");
         }
         fuelTypeRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void reactivateFuelType(UUID id) {
+        FuelType fuelType = fuelTypeRepository.findByIdIncludingInactive(id)
+                .orElseThrow(() -> new BusinessException("Fuel type not found."));
+
+        if (fuelType.getStatus() == Status.ativo) {
+            throw new BusinessException("Fuel type is already active.");
+        }
+
+        fuelType.setStatus(Status.ativo);
+        fuelTypeRepository.save(fuelType);
     }
 }
