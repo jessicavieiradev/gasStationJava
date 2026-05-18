@@ -48,4 +48,10 @@ public class FuelTypeController {
         fuelTypeService.deleteFuelType(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PatchMapping("/{id}/reactivate")
+    public ResponseEntity<Void> reactivate(@PathVariable UUID id) {
+        fuelTypeService.reactivateFuelType(id);
+        return ResponseEntity.noContent().build();
+    }
 }
