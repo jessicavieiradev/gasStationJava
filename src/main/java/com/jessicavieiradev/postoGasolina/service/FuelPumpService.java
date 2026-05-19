@@ -27,7 +27,7 @@ public class FuelPumpService implements IFuelPumpService{
 
     @Transactional
     public FuelPumpResponse create(FuelPumpRequest dto) {
-        if (fuelPumpRepository.existsByName(dto.name())) {
+        if (fuelPumpRepository.existsAnyByNameIgnoreCase(dto.name())) {
             throw new BusinessException("The fuel pump name already exists.");
         }
         FuelType fuelType = fuelTypeRepository.findById(dto.fuelTypeId())

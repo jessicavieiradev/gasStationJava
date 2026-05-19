@@ -23,7 +23,7 @@ public class FuelTypeService implements IFuelTypeService {
 
     @Transactional
     public FuelTypeResponse create(FuelTypeRequest dto) {
-        if (fuelTypeRepository.existsByName(dto.name())) {
+        if (fuelTypeRepository.existsAnyByNameIgnoreCase(dto.name())) {
             throw new BusinessException("Fuel type already exists.");
         }
 
@@ -53,7 +53,7 @@ public class FuelTypeService implements IFuelTypeService {
         FuelType fuelType = fuelTypeRepository.findById(id)
                 .orElseThrow(() -> new BusinessException("Fuel type not found."));
 
-        if (fuelTypeRepository.existsByName(dto.name()) && !fuelType.getName().equals(dto.name())) {
+        if (fuelTypeRepository.existsAnyByNameIgnoreCase(dto.name()) && !fuelType.getName().equals(dto.name())) {
             throw new BusinessException("Fuel type name already in use.");
         }
 
