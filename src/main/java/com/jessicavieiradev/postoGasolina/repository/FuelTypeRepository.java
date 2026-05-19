@@ -9,8 +9,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FuelTypeRepository extends JpaRepository<FuelType, UUID> {
-    boolean existsByName(String name);
+    @Query(value = """
+    SELECT COUNT(*) > 0
+    FROM fuel_types
+    WHERE LOWER(name) = LOWER(?)
+    """, nativeQuery = true)
+    boolean existsAnyByNameIgnoreCase(String name);
 
-    @Query(value = "SELECT * FROM fuel_types WHERE id = ?", nativeQuery = true)
+    @Query(value = "SELECT * FROM fuel_types WHERE id = :id", nativeQuery = true)
     Optional<FuelType> findByIdIncludingInactive(@Param("id") UUID id);
 }
