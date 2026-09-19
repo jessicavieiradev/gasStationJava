@@ -156,13 +156,6 @@ Copy the example file and fill in your values:
 cp .env-example .env
 ```
 
-```env
-DB_URL=jdbc:postgresql://postgres:5432/your_db_name
-DB_NAME=your_db_name
-DB_USER=your_user
-DB_PASSWORD=your_password
-```
-
 > **Note:** `DB_URL` must use `postgres` as the host (Docker service name), not `localhost`.
 
 ### 3. Run with Docker Compose
